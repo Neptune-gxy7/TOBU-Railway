@@ -29,4 +29,4 @@ Console.WriteLine("[ATOS] 発車するホーム番号を入力してください
 Console.WriteLine("[ATOS] 列車の発車時刻を入力してください");
   traintime = Console.ReadLine();
 
-DoAnnounce(homenumber, traintype, station, carnumber);
+await DoAnnounce(homenumber, traintype, station, carnumber);

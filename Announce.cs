@@ -1,16 +1,15 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NetCoreAudio;
 
 namespace TOBU_Railway
 {
     internal class Announce
     {
-        static bool playing = true;
         public static void DoAnnounce(string trackNum, string type, string dest, string carsNum)
         {
             List<string> announceWord = ["まもなく"];
@@ -27,8 +26,7 @@ namespace TOBU_Railway
             announceWord.Add("黄色い点字ブロックの後ろまで"); 
             announceWord.Add("お下がりください");
 
-            Player player = new Player();
-            player.PlaybackFinished += Player_PlaybackFinished;
+            
             foreach (string word in announceWord)
             {
                 if(word.Contains("wait"))
@@ -36,21 +34,18 @@ namespace TOBU_Railway
                     Thread.Sleep(int.Parse(word.Split(" ")[1]));
                 } else
                 {
-                    player.Play(Path.Combine(voiceFolderName, word) + ".wav");
-                    playing = true;
-                    Console.WriteLine("{0}を再生中", word + ".wav");
-                    while (playing)
+                    using (var audioFile = new AudioFileReader(Path.Combine(voiceFolderName, word) + ".wav"))
+                    using (var outputDevice = new WaveOutEvent())
                     {
-                        Thread.Sleep(100);
-                        Console.WriteLine("waiting");
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            Thread.Sleep(200);
+                        }
                     }
                 }
             }
-        }
-
-        public static void Player_PlaybackFinished(object? sender, EventArgs e)
-        {
-            playing = false;
         }
     }
 }
