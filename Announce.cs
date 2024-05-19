@@ -12,7 +12,7 @@ namespace TOBU_Railway
     {
         public static void DoAnnounce(string trackNum, string type, string dest, string carsNum)
         {
-            List<string> announceWord = ["まもなく"];
+            List<string> announceWord = ["接近音", "まもなく"];
             string voiceFolderName = "voices";
 
             // 番線に
@@ -34,15 +34,21 @@ namespace TOBU_Railway
                     Thread.Sleep(int.Parse(word.Split(" ")[1]));
                 } else
                 {
-                    using (var audioFile = new AudioFileReader(Path.Combine(voiceFolderName, word) + ".wav"))
-                    using (var outputDevice = new WaveOutEvent())
+                    try
                     {
-                        outputDevice.Init(audioFile);
-                        outputDevice.Play();
-                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        using (var audioFile = new AudioFileReader(Path.Combine(voiceFolderName, word) + ".wav"))
+                        using (var outputDevice = new WaveOutEvent())
                         {
-                            Thread.Sleep(200);
+                            outputDevice.Init(audioFile);
+                            outputDevice.Play();
+                            while (outputDevice.PlaybackState == PlaybackState.Playing)
+                            {
+                                Thread.Sleep(200);
+                            }
                         }
+                    } catch(Exception ex)
+                    {
+
                     }
                 }
             }
