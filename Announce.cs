@@ -10,6 +10,7 @@ namespace TOBU_Railway
 {
     internal class Announce
     {
+        static bool playing = true;
         public static void DoAnnounce(string trackNum, string type, string dest, string carsNum)
         {
             List<string> announceWord = ["まもなく"];
@@ -27,7 +28,8 @@ namespace TOBU_Railway
             announceWord.Add("お下がりください");
 
             Player player = new Player();
-            foreach(string word in announceWord)
+            player.PlaybackFinished += Player_PlaybackFinished;
+            foreach (string word in announceWord)
             {
                 if(word.Contains("wait"))
                 {
@@ -35,12 +37,20 @@ namespace TOBU_Railway
                 } else
                 {
                     player.Play(Path.Combine(voiceFolderName, word) + ".wav");
-                    while(player.Playing)
+                    playing = true;
+                    Console.WriteLine("{0}を再生中", word + ".wav");
+                    while (playing)
                     {
-                        Thread.Sleep(120); // 100だとなぜか動かず
+                        Thread.Sleep(100);
+                        Console.WriteLine("waiting");
                     }
                 }
             }
+        }
+
+        public static void Player_PlaybackFinished(object? sender, EventArgs e)
+        {
+            playing = false;
         }
     }
 }

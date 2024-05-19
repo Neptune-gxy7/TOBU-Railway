@@ -1,4 +1,5 @@
-﻿
+﻿using static TOBU_Railway.Announce;
+
 
 Console.WriteLine("こんにちは！　東武鉄道ファンよ。");
 Console.WriteLine("ここでは東武線の放送を再現をしているよ！");
@@ -27,3 +28,5 @@ Console.WriteLine("[ATOS] 発車するホーム番号を入力してください
   homenumber = Console.ReadLine();
 Console.WriteLine("[ATOS] 列車の発車時刻を入力してください");
   traintime = Console.ReadLine();
+
+DoAnnounce(homenumber, traintype, station, carnumber);
