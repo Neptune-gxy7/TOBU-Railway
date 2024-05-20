@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build
-        path: . # or path/to/artifact
+        path: bin/Release/net8.0/publish # or path/to/artifact
