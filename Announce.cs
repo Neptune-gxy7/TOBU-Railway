@@ -16,21 +16,14 @@ namespace TOBU_Railway
             string voiceFolderName = "voices";
 
             // 番線に
-            announceWord.Add("wait 300");
             announceWord.Add(trackNum + "番線に");
-            announceWord.Add("wait 300");
             announceWord.Add(type);
-            announceWord.Add("wait 300");
             announceWord.Add(dest + "行きが");
-            announceWord.Add("wait 300");
             announceWord.Add(carsNum + "両編成で");
-            announceWord.Add("wait 300");
             announceWord.Add("参ります");
             announceWord.Add("wait 600");
             announceWord.Add("安全のため");
-            announceWord.Add("wait 300");
             announceWord.Add("黄色い点字ブロックの後ろまで");
-            announceWord.Add("wait 300");
             announceWord.Add("お下がりください");
 
             
