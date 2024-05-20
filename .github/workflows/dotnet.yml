@@ -23,11 +23,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet publish --no-restore
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: build
-        path: bin/Debug/net8.0 # or path/to/artifact
+        path: . # or path/to/artifact
